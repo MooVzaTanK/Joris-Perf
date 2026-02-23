@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joris Performe | Coach Sportif Illkirch & Coaching en Ligne</title>
+    <meta name="description" content="Joris Wagner, coach sportif diplômé à Illkirch-Graffenstaden et en ligne. L'antidote à la sédentarité pour actifs et employés de bureau.">
+    <meta name="keywords" content="coach sportif Illkirch, coaching en ligne, perte de poids, anti-sédentarité, mal de dos bureau, Joris Performe">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <style>
+        /* ==========================================================================
+           CHARTE GRAPHIQUE
+           ========================================================================== */
+        :root {
+            --sky-blue: #00B4D8;
+            --sky-gradient: linear-gradient(135deg, #48CAE4 0%, #00B4D8 100%);
+            --promo-gradient: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+            --deep-black: #121212; 
+            --pure-white: #ffffff;
+            --light-grey-bg: #f8f9fa;
+            --soft-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            --hover-shadow-blue: 0 25px 50px rgba(0, 180, 216, 0.25);
+            --whatsapp-green: #25D366;
+            --gold-star: #FFD700;
+        }
+
+        body { font-family: 'Montserrat', sans-serif; color: var(--deep-black); overflow-x: hidden; line-height: 1.7; background-color: var(--pure-white); }
+        h1, h2, h3, h4, h5, .h-font { font-weight: 700; letter-spacing: -0.5px; color: var(--deep-black); }
+        h1, h2 { font-style: italic; }
+        strong { font-weight: 800; color: var(--sky-blue); }
+
+        /* --- ANIMATIONS --- */
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .animate-visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.4s; }
+        
+        @keyframes pulse-whatsapp { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        /* --- NAVBAR --- */
+        .navbar { transition: all 0.4s ease; padding: 15px 0; background: transparent; }
+        .navbar-brand img { height: 60px; width: auto; background: rgba(255, 255, 255, 0.95); padding: 8px 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .navbar.scrolled { background: var(--pure-white); box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 10px 0; }
+        .navbar.scrolled .navbar-brand img { background: transparent; box-shadow: none; padding: 0; height: 50px; }
+        .nav-link { color: white !important; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; padding: 10px 15px !important; transition: color 0.3s ease; }
+        .navbar.scrolled .nav-link { color: var(--deep-black) !important; }
+        .nav-link:hover, .nav-link.active { color: var(--sky-blue) !important; }
+        .cart-nav-item { position: relative; margin-left: 15px; cursor: pointer; transition: transform 0.3s ease; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: var(--sky-blue); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; }
+        .cart-nav-item i { color: white; transition: color 0.4s ease; }
+        .navbar.scrolled .cart-nav-item i { color: var(--deep-black); }
+
+        /* --- HERO --- */
+        #hero { position: relative; min-height: 100vh; display: flex; align-items: center; color: white; overflow: hidden; }
+        #hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1564585222527-c2777a5bc6cb?auto=format&fit=crop&w=1920&q=80') center top/cover; z-index: -2; animation: cinematicZoom 25s infinite alternate linear; }
+        #hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(18, 18, 18, 0.95) 0%, rgba(18, 18, 18, 0.8) 50%, rgba(0, 180, 216, 0.3) 100%); z-index: -1; }
+        @keyframes cinematicZoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        
+        .hero-title { font-family: 'Anton', sans-serif; font-size: 5.5rem; line-height: 1.1; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; color: #ffffff; font-style: normal; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .hero-title-outline { color: transparent; -webkit-text-stroke: 2px #ffffff; display: block; margin-top: 10px; line-height: 1.1; }
+        .hero-subtitle { font-size: 1.3rem; font-weight: 500; margin-bottom: 40px; color: #e0e0e0; max-width: 95%; line-height: 1.6; }
+        @media (max-width: 991px) { .hero-title { font-size: 4rem; line-height: 1.15; } }
+        @media (max-width: 576px) { .hero-title { font-size: 2.8rem; line-height: 1.2; margin-bottom: 15px; } .hero-title-outline { -webkit-text-stroke: 1.5px #ffffff; margin-top: 5px;} .hero-subtitle { font-size: 1.1rem; } }
+
+        .btn-cta { background: var(--sky-gradient); border: none; color: white; padding: 15px 35px; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 20px -10px rgba(0, 180, 216, 0.6); transition: all 0.3s ease; }
+        .btn-cta:hover { transform: translateY(-4px); box-shadow: 0 15px 30px -10px rgba(0, 180, 216, 0.9); color: white !important; }
+        .btn-whatsapp { background: var(--whatsapp-green); color: white; padding: 15px 35px; border-radius: 50px; font-weight: 800; text-transform: uppercase; border: none; transition: all 0.3s ease; box-shadow: 0 10px 20px -10px rgba(37, 211, 102, 0.5); }
+        .btn-whatsapp:hover { transform: translateY(-4px); box-shadow: 0 15px 25px -10px rgba(37, 211, 102, 0.8); }
+        .section-padding { padding: 120px 0; }
+        .mb-huge { margin-bottom: 90px; }
+
+        /* --- LEAD MAGNET --- */
+        .lead-magnet-bar { background: var(--sky-gradient); color: white; padding: 30px 0; box-shadow: 0 5px 20px rgba(0, 180, 216, 0.2); }
+        .lead-magnet-input { border-radius: 50px 0 0 50px; border: none; padding: 15px 25px; outline: none; font-weight: 500; }
+        .lead-magnet-btn { border-radius: 0 50px 50px 0; background: var(--deep-black); color: white; border: none; padding: 15px 35px; font-weight: 800; transition: all 0.3s ease; text-transform: uppercase;}
+        .lead-magnet-btn:hover { background: #333; }
+
+        /* --- A PROPOS --- */
+        .about-img-wrapper { position: relative; display: inline-block; margin-bottom: 2rem; cursor: pointer; transition: transform 0.3s ease; }
+        .about-img-wrapper:hover { transform: scale(1.02); }
+        .about-img { border-radius: 30px; box-shadow: var(--soft-shadow); width: 100%; max-width: 450px; border: 5px solid var(--light-grey-bg); }
+        .play-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--sky-gradient); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 30px rgba(0, 180, 216, 0.4); z-index: 3; transition: all 0.3s ease;}
+        .about-img-wrapper:hover .play-overlay { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 20px 40px rgba(0, 180, 216, 0.6); }
+        .diploma-badge { position: absolute; bottom: -20px; right: -20px; background: white; padding: 15px 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-left: 5px solid var(--sky-blue); display: flex; align-items: center; font-weight: 800; z-index: 2;}
+        .quote-block { border-left: 5px solid var(--sky-blue); padding-left: 25px; margin: 30px 0; font-size: 1.3rem; font-style: italic; font-weight: 700; color: var(--deep-black); }
+        .principle-item { display: flex; align-items: center; margin-bottom: 15px; background: var(--light-grey-bg); padding: 15px 20px; border-radius: 15px; transition: all 0.3s ease;}
+        .principle-item:hover { transform: translateX(10px); background: #eefaff; }
+        .principle-item i { color: var(--sky-blue); font-size: 1.5rem; margin-right: 15px; }
+        .principle-item span { font-weight: 700; font-size: 1rem; }
+
+        /* --- BULLES ANIMÉES --- */
+        .values-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px; }
+        .progress-bubble-wrapper { text-align: center; width: 140px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .progress-bubble-wrapper:hover { transform: scale(1.1); }
+        .progress-bubble { position: relative; width: 120px; height: 120px; margin: 0 auto; }
+        .progress-bubble svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+        .progress-bubble circle { fill: none; stroke-width: 8; stroke-linecap: round; }
+        .bg-circle { stroke: #e0e0e0; }
+        .progress-circle { stroke: var(--sky-blue); stroke-dasharray: 339.292; stroke-dashoffset: 339.292; transition: stroke-dashoffset 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.8rem; font-weight: 900; color: var(--deep-black); display: flex; align-items: center; justify-content: center; }
+        .progress-text span.percent { font-size: 1rem; margin-top: 5px; margin-left: 2px;}
+        .bubble-label { font-weight: 800; font-size: 0.95rem; margin-top: 15px; text-transform: uppercase; color: var(--deep-black); }
+
+        /* --- PACKS EN LIGNE --- */
+        .pricing-card { background: var(--pure-white); border: 2px solid #eee; border-radius: 2rem; padding: 40px 20px; box-shadow: var(--soft-shadow); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; height: 100%; position: relative; z-index: 1; }
+        .pricing-card:hover { transform: translateY(-12px) scale(1.03); box-shadow: var(--hover-shadow-blue); border-color: var(--sky-blue); z-index: 15; }
+        .pricing-icon-top { font-size: 3rem; color: var(--sky-blue); margin-bottom: 20px; transition: transform 0.3s ease; }
+        .pricing-card:hover .pricing-icon-top { transform: scale(1.1); }
+        .price-wrapper { font-size: 3.2rem; font-weight: 900; line-height: 1; font-style: italic; color: var(--deep-black); }
+        .price-currency { font-size: 1.8rem; vertical-align: super; }
+        .price-duration { font-size: 0.9rem; font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 1px; display: block; margin-top: 5px;}
+        .pricing-divider { height: 2px; background: #eee; margin: 25px 0; border: none; }
+        .pricing-features li { margin-bottom: 15px; list-style: none; display: flex; align-items: flex-start; font-size: 0.95rem; font-weight: 500; color: var(--deep-black); }
+        .pricing-features i { color: var(--sky-blue); margin-right: 12px; font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
+        
+        .pricing-featured { background: var(--deep-black); color: white; border: 2px solid var(--deep-black); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .pricing-featured:hover { border-color: var(--sky-blue); box-shadow: 0 30px 60px rgba(0, 180, 216, 0.3); }
+        .pricing-featured .pricing-icon-top { background: var(--sky-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .pricing-featured .price-wrapper { color: white; }
+        .pricing-featured .price-duration { color: #888; }
+        .pricing-featured .pricing-divider { background: rgba(255,255,255,0.1); }
+        .pricing-featured .pricing-features li { color: white; font-weight: 500;}
+        
+        .badge-popular { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); background: var(--sky-gradient); color: white; padding: 8px 25px; border-radius: 50px; font-weight: 900; font-size: 0.85rem; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(0, 180, 216, 0.4); white-space: nowrap; }
+        .badge-promo { position: absolute; top: -12px; right: -10px; background: var(--promo-gradient); color: white; padding: 8px 15px; border-radius: 50px; font-weight: 900; font-size: 0.8rem; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(255, 65, 108, 0.4); transform: rotate(10deg); z-index: 10; border: 2px solid white; white-space: nowrap;}
+        .text-promo { color: #FF416C !important; }
+
+        @media (min-width: 992px) { .pricing-featured { transform: scale(1.05); z-index: 10; } .animate-visible .pricing-featured:hover { transform: scale(1.08) translateY(-12px); } }
+        @media (max-width: 991px) { .pricing-featured { margin-top: 2rem; margin-bottom: 2rem; border: 2px solid var(--sky-blue); } }
+        .btn-outline-blue { border: 2px solid var(--sky-blue); color: var(--sky-blue); font-weight: 800; border-radius: 50px; padding: 10px 20px; transition: all 0.3s ease; background: transparent; font-size: 0.95rem; }
+        .btn-outline-blue:hover { background: var(--sky-blue); color: white; }
+
+        /* --- PRÉSENTIEL (CERCLE RADAR MAP) --- */
+        .map-container { position: relative; border-radius: 30px; overflow: hidden; box-shadow: var(--soft-shadow); height: 450px; width: 100%; border: 5px solid white; }
+        .map-radius-overlay { position: absolute; top: 50%; left: 50%; width: 300px; height: 300px; background: rgba(0, 180, 216, 0.15); border: 3px solid var(--sky-blue); border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; animation: pulse-map 3s infinite; }
+        @keyframes pulse-map { 0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(0, 180, 216, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0); } }
+        .sap-badge-map { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--deep-black); color: white; padding: 12px 25px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-weight: 800; font-size: 0.9rem; white-space: nowrap; z-index: 2; }
+        
+        .tax-benefit-box { background: #fdfdfd; border: 2px solid #eee; border-radius: 30px; padding: 35px; box-shadow: var(--soft-shadow);}
+        .pricing-tier-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .pricing-tier-row:last-child { border-bottom: none; }
+        .tier-label { font-weight: 700; color: var(--deep-black); font-size: 1.05rem;}
+        .tier-price { font-size: 1.5rem; font-weight: 900; color: var(--sky-blue); font-style: italic;}
+        .tier-price span { font-size: 0.85rem; font-weight: 600; color: #aaa; font-style: normal;}
+        
+        .alert-cancellation { background: rgba(255, 65, 108, 0.05); border-left: 4px solid #FF416C; padding: 15px; border-radius: 0 15px 15px 0; margin-top: 25px; display: flex; align-items: center;}
+
+        /* --- AVIS ET TRANSFORMATIONS --- */
+        .testimonial-card { background: white; padding: 35px; border-radius: 25px; box-shadow: var(--soft-shadow); height: 100%; position: relative; border-bottom: 5px solid transparent; transition: all 0.3s ease; }
+        .testimonial-card:hover { border-bottom-color: var(--sky-blue); transform: translateY(-5px); box-shadow: var(--hover-shadow-blue); }
+        .client-avatar img { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 4px solid var(--light-grey-bg); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .star-rating { color: var(--gold-star); font-size: 1.2rem; margin-bottom: 20px; }
+        .transformation-img { object-fit: cover; height: 250px; width: 100%; }
+
+        /* --- FAQ --- */
+        #faq .accordion-item { border: none; margin-bottom: 15px; border-radius: 20px !important; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        #faq .accordion-button { font-weight: 800; color: var(--deep-black); background: white; padding: 25px; box-shadow: none; font-size: 1.1rem; transition: all 0.3s ease;}
+        #faq .accordion-button:not(.collapsed) { color: var(--sky-blue); background: #eefaff; }
+        .accordion-button::after { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2300B4D8'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); }
+        .accordion-body { padding: 25px; color: #555; line-height: 1.7; }
+        
+        /* --- CONTACT (BENTO) --- */
+        .contact-section-bg { background-color: var(--light-grey-bg); position: relative; }
+        .contact-section-bg::before { content:''; position:absolute; top:0; left:0; width:100%; height:45%; background: var(--deep-black); z-index:0; }
+        .bento-card { background: var(--pure-white); border-radius: 30px; padding: 45px; box-shadow: var(--soft-shadow); border: 1px solid rgba(0,0,0,0.03); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; position: relative; overflow: hidden; }
+        .bento-card:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow-blue); border-color: rgba(0, 180, 216, 0.2); }
+        .bento-whatsapp { background: linear-gradient(135deg, #1a1e23 0%, #0a0c0f 100%); color: white; border: none; }
+        .bento-whatsapp:hover { border: 1px solid var(--whatsapp-green); box-shadow: 0 20px 40px rgba(37, 211, 102, 0.2); }
+        .contact-icon-circle { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 25px; }
+        .bg-blue-light { background: rgba(0, 180, 216, 0.1); color: var(--sky-blue); }
+        .bg-green-light { background: rgba(37, 211, 102, 0.1); color: var(--whatsapp-green); }
+        .simple-form-label { font-weight: 700; font-size: 0.9rem; color: var(--deep-black); margin-bottom: 8px; display: block; }
+        .simple-input { width: 100%; background: #f4f7f6; border: 2px solid transparent; border-radius: 15px; padding: 16px 20px; font-size: 1rem; font-weight: 500; color: var(--deep-black); transition: all 0.3s ease; }
+        .simple-input::placeholder { color: #adb5bd; font-weight: 400; }
+        .simple-input:focus { background: var(--pure-white); border-color: var(--sky-blue); box-shadow: 0 10px 25px rgba(0, 180, 216, 0.15); outline: none; }
+        textarea.simple-input { border-radius: 20px; resize: none; }
+        .btn-submit-animated { display: flex; align-items: center; justify-content: center; width: 100%; gap: 10px; }
+        .btn-submit-animated:hover i { transform: translateX(5px) translateY(-5px); transition: transform 0.3s ease; }
+        .btn-submit-animated i { transition: transform 0.3s ease; }
+
+        /* --- FOOTER & LEGAL --- */
+        footer { background: white; color: var(--deep-black); padding: 80px 0 0 0; }
+        footer h4, footer h5 { font-weight: 900; letter-spacing: 0.5px; }
+        footer a { color: var(--deep-black); text-decoration: none; transition: color 0.3s ease; font-weight: 700; }
+        footer a:hover { color: var(--sky-blue); }
+        #mentions-legales { background: var(--deep-black); color: #aaa; padding: 40px 0; font-size: 0.9rem; border-top: 5px solid var(--sky-blue); margin-top: 50px; }
+        #mentions-legales a { color: #ddd; text-decoration: none; transition: color 0.3s ease; font-weight: 600;}
+        #mentions-legales a:hover { color: var(--sky-blue); }
+
+        /* --- MODALES --- */
+        .modal-content { border-radius: 30px; border: none; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+        .modal-header { padding: 25px 30px;}
+        .modal-header .btn-close { opacity: 1; }
+        
+        /* --- CHATBOT (NOVA) --- */
+        .chat-launcher { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--sky-gradient); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 15px 30px -10px rgba(0, 180, 216, 0.7); z-index: 9999; transition: all 0.3s ease; }
+        .chat-launcher:hover { transform: scale(1.1) rotate(10deg); }
+        .chat-window { position: fixed; bottom: 110px; right: 30px; width: 360px; max-width: 90vw; height: 550px; background: white; border-radius: 25px; box-shadow: var(--soft-shadow); z-index: 9998; display: none; flex-direction: column; overflow: hidden; border: 1px solid #eee; }
+        .chat-window.active { display: flex; animation: fadeUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .chat-header { background: var(--deep-black); color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--sky-blue); }
+        .chat-header .btn-close { filter: invert(1); opacity: 0.8; }
+        .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fdfdfd; scroll-behavior: smooth;}
+        .chat-message { padding: 12px 18px; border-radius: 20px; max-width: 85%; font-size: 0.95rem; line-height: 1.4; font-weight: 500; animation: msgFadeIn 0.3s ease forwards;}
+        @keyframes msgFadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+        .bot-message { background: white; align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); color: var(--deep-black); border: 1px solid #eee;}
+        .user-message { background: var(--sky-gradient); color: white; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 2px 8px rgba(0, 180, 216, 0.2);}
+        .typing-indicator { display: flex; align-items: center; gap: 4px; padding: 12px 18px; background: white; align-self: flex-start; border-radius: 20px; border-bottom-left-radius: 4px; border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 5px; display: none; }
+        .typing-indicator.active { display: flex; }
+        .typing-dot { width: 6px; height: 6px; background-color: var(--sky-blue); border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        .chat-options { padding: 10px 20px 20px 20px; display: flex; flex-wrap: wrap; gap: 8px; background: #fdfdfd; }
+        .chat-option-btn { background: white; border: 1px solid var(--sky-blue); color: var(--sky-blue); padding: 8px 14px; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: inline-block; }
+        .chat-option-btn:hover { background: var(--sky-blue); color: white; transform: translateY(-2px); }
+        .chat-input-area { padding: 15px; background: white; border-top: 1px solid #eee; display: flex; align-items: center; gap: 10px; }
+        .chat-input { flex-grow: 1; border: 1px solid #eee; background: var(--light-grey-bg); border-radius: 50px; padding: 12px 20px; font-size: 0.95rem; outline: none; transition: border 0.3s ease; }
+        .chat-input:focus { border-color: var(--sky-blue); }
+        .chat-send-btn { width: 45px; height: 45px; border-radius: 50%; background: var(--sky-gradient); color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);}
+        .chat-send-btn:hover { transform: scale(1.1); }
+    </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="100">
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="z-index: 999;">
+        <div class="container">
+            <a class="navbar-brand" href="#hero">
+                <img src="image.png" alt="Logo Joris Performe">
+            </a>
+            <div class="cart-nav-item d-lg-none me-3" data-bs-toggle="modal" data-bs-target="#cartModal">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="cart-badge" id="cart-count-mobile">0</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#hero">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#a-propos">Le Coach</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#coaching-en-ligne">Coachings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#presentiel">Domicile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#avis">Avis & Résultats</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">F.A.Q.</a></li>
+                    <li class="nav-item ms-lg-3 d-none d-lg-block"><a class="btn btn-cta rounded-pill px-4 btn-sm" href="#contact">Contact</a></li>
+                    <li class="nav-item d-none d-lg-block"><div class="cart-nav-item" data-bs-toggle="modal" data-bs-target="#cartModal"><i class="fas fa-shopping-cart fa-lg"></i><span class="cart-badge" id="cart-count-desktop">0</span></div></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero">
+        <div class="container hero-content position-relative z-1">
+            <div class="row align-items-center">
+                <div class="col-lg-10">
+                    <h1 class="hero-title mt-4">
+                        VOTRE CORPS N'EST PAS FAIT<br>
+                        <span class="hero-title-outline">POUR RESTER ASSIS.</span>
+                    </h1>
+                    <p class="hero-subtitle">L'antidote parfait à la sédentarité. Une méthode d'entraînement pensée pour les actifs pressés : éliminez les tensions, perdez du poids et retrouvez votre énergie vitale.</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#coaching-en-ligne" class="btn btn-cta">Voir les programmes</a>
+                        <a href="#presentiel" class="btn btn-outline-light rounded-pill px-4 py-3 fw-bold text-uppercase" style="border-width: 2px;">Coaching à domicile (-50%)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="lead-magnet-bar">
+        <div class="container">
+            <div class="row align-items-center justify-content-center text-center text-lg-start">
+                <div class="col-lg-7 mb-3 mb-lg-0">
+                    <h4 class="mb-1 text-white"><i class="fas fa-gift me-2 text-white"></i> Cadeau de bienvenue !</h4>
+                    <p class="mb-0 text-white">Téléchargez mon guide gratuit : <strong class="text-white text-decoration-underline">"5 exercices pour déverrouiller son dos au bureau"</strong>.</p>
+                </div>
+                <div class="col-lg-5">
+                    <form action="LIEN_DE_TON_OUTIL_EMAIL_ICI" method="POST" target="_blank" class="d-flex shadow-sm rounded-pill">
+                        <input type="email" name="EMAIL" class="form-control lead-magnet-input" placeholder="Votre adresse email..." required>
+                        <button type="submit" class="lead-magnet-btn">Recevoir le PDF</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="a-propos" class="section-padding animate-on-scroll">
+        <div class="container">
+            <div class="row align-items-center mb-5 pb-5 border-bottom">
+                <div class="col-lg-5 mb-5 mb-lg-0 text-center position-relative">
+                    <div class="about-img-wrapper" data-bs-toggle="modal" data-bs-target="#videoModal">
+                        <img src="image2.jpg" alt="Joris Wagner Coach" class="img-fluid about-img" onerror="this.src='https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=600&q=80';">
+                        <div class="play-overlay">
+                            <i class="fas fa-play fs-2 ms-1 text-white"></i>
+                        </div>
+                        <div class="diploma-badge">
+                            <i class="fas fa-certificate text-primary-blue fa-2x me-3"></i>
+                            <div class="text-start">
+                                <span class="d-block text-dark small text-uppercase" style="line-height: 1;">Coach Diplômé BPJEPS</span>
+                                <span class="text-primary-blue">Joueur N2 Basket</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1">
+                    <h4 class="text-primary-blue text-uppercase">L'Expertise</h4>
+                    <h2 class="display-5 mb-4">De l'exigence du parquet à votre quotidien.</h2>
+                    <p class="lead fw-bold text-dark-black">Je suis Joris, coach sportif indépendant depuis 4 ans et joueur de basketball de haut niveau.</p>
+                    <p>Passé par le centre de formation de la <strong>SIG Strasbourg</strong> durant 5 ans, puis par Le Mans et Holtzheim, j'évolue aujourd'hui en Nationale 2 à l'<strong>ASA Souffelweyersheim</strong>. Le sport de compétition m'a forgé une culture inébranlable de l'effort, de la discipline et de la progression.</p>
+                    <div class="quote-block">
+                        « Le bien-être avant tout, pour avancer pas à pas vers les résultats »
+                    </div>
+                    <p>Aujourd'hui, je mets cette rigueur au service des actifs et employés de bureau. Ma vision ? Placer votre bien-être au cœur de l'accompagnement. Je veux que vous compreniez <em>pourquoi</em> vous vous entraînez, et surtout, que vous y preniez plaisir dans un cadre motivant et sécurisant.</p>
+                </div>
+            </div>
+
+            <div class="row mb-5 pb-4">
+                <div class="col-12 text-center mb-5">
+                    <h3 class="h2 fw-bold">Mes Principes Fondamentaux</h3>
+                </div>
+                <div class="col-md-4"><div class="principle-item"><i class="fas fa-unlock-alt"></i><span>Coaching accessible à tous</span></div><div class="principle-item"><i class="fas fa-sliders-h"></i><span>Adaptation à vos capacités</span></div></div>
+                <div class="col-md-4"><div class="principle-item"><i class="fas fa-shield-alt"></i><span>Progression sécurisée</span></div><div class="principle-item"><i class="fas fa-smile-beam"></i><span>Plaisir de s'entraîner</span></div></div>
+                <div class="col-md-4"><div class="principle-item"><i class="fas fa-handshake"></i><span>Respect & Engagement</span></div><div class="principle-item"><i class="fas fa-bolt"></i><span>Énergie & Bonne humeur</span></div></div>
+            </div>
+
+            <div class="row" id="values-section">
+                <div class="col-12 text-center">
+                    <h3 class="h2 fw-bold mb-2">Mes Valeurs en Chiffres</h3>
+                    <p class="text-primary-blue fw-bold mb-4"><i class="fas fa-mouse-pointer me-2"></i> Passez votre curseur sur les bulles pour les remplir</p>
+                </div>
+                <div class="values-container">
+                    <div class="progress-bubble-wrapper" data-value="100"><div class="progress-bubble"><svg viewBox="0 0 120 120"><circle class="bg-circle" cx="60" cy="60" r="54"></circle><circle class="progress-circle" cx="60" cy="60" r="54"></circle></svg><div class="progress-text"><span class="counter">0</span><span class="percent">%</span></div></div><div class="bubble-label">Bienveillance</div></div>
+                    <div class="progress-bubble-wrapper" data-value="90"><div class="progress-bubble"><svg viewBox="0 0 120 120"><circle class="bg-circle" cx="60" cy="60" r="54"></circle><circle class="progress-circle" cx="60" cy="60" r="54"></circle></svg><div class="progress-text"><span class="counter">0</span><span class="percent">%</span></div></div><div class="bubble-label">Pédagogie</div></div>
+                    <div class="progress-bubble-wrapper" data-value="100"><div class="progress-bubble"><svg viewBox="0 0 120 120"><circle class="bg-circle" cx="60" cy="60" r="54"></circle><circle class="progress-circle" cx="60" cy="60" r="54"></circle></svg><div class="progress-text"><span class="counter">0</span><span class="percent">%</span></div></div><div class="bubble-label">Motivation</div></div>
+                    <div class="progress-bubble-wrapper" data-value="95"><div class="progress-bubble"><svg viewBox="0 0 120 120"><circle class="bg-circle" cx="60" cy="60" r="54"></circle><circle class="progress-circle" cx="60" cy="60" r="54"></circle></svg><div class="progress-text"><span class="counter">0</span><span class="percent">%</span></div></div><div class="bubble-label">Résultats</div></div>
+                    <div class="progress-bubble-wrapper" data-value="100"><div class="progress-bubble"><svg viewBox="0 0 120 120"><circle class="bg-circle" cx="60" cy="60" r="54"></circle><circle class="progress-circle" cx="60" cy="60" r="54"></circle></svg><div class="progress-text"><span class="counter">0</span><span class="percent">%</span></div></div><div class="bubble-label">Bonne humeur</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="coaching-en-ligne" class="section-padding bg-light-custom">
+        <div class="container">
+            <div class="text-center mb-huge">
+                <h4 class="text-primary-blue text-uppercase fw-bold">Programmes à distance</h4>
+                <h2 class="display-4 text-dark-black">Vos Coachings 100% en ligne</h2>
+            </div>
+            
+            <div class="row g-4 align-items-center justify-content-center">
+                
+                <div class="col-md-6 col-lg-3 animate-on-scroll delay-1">
+                    <div class="pricing-card" style="border-color: #eee;">
+                        <div class="badge-promo">OFFRE TEST</div>
+                        <i class="fas fa-paper-plane pricing-icon-top"></i>
+                        <h4 class="fw-bold mb-1">L'Impulsion</h4>
+                        <p class="text-muted mb-4">Le déclic (1 mois)</p>
+                        <div class="mb-2 d-flex align-items-center justify-content-center">
+                            <span class="text-muted text-decoration-line-through fs-5 fw-bold me-2">250€</span>
+                            <span class="price-wrapper text-promo">150<span class="price-currency" style="font-size: 1.5rem;">€</span></span>
+                        </div>
+                        <hr class="pricing-divider">
+                        <ul class="pricing-features p-0">
+                            <li><i class="fas fa-check text-promo"></i> <span class="fw-bold text-promo">Valable 1 seule fois</span></li>
+                            <li><i class="fas fa-check"></i> Carnet d'entraînement pro</li>
+                            <li><i class="fas fa-check"></i> Conseils nutritionnels</li>
+                            <li><i class="fas fa-check"></i> Support messagerie 7j/7</li>
+                        </ul>
+                        <div class="mt-auto pt-4 text-center">
+                            <button class="btn w-100 btn-outline-blue mb-3" data-bs-toggle="modal" data-bs-target="#packDetailsModal1">Voir les détails</button>
+                            <button class="btn btn-dark w-100 rounded-pill fw-bold py-3" onclick="addToCart('Pack Impulsion (1 mois)', 150)">Ajouter au panier</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 animate-on-scroll delay-2">
+                    <div class="pricing-card">
+                        <i class="fas fa-seedling pricing-icon-top"></i>
+                        <h4 class="fw-bold mb-1">La Fondation</h4>
+                        <p class="text-muted mb-4">Créer des habitudes (3 mois)</p>
+                        <div class="mb-2"><span class="price-wrapper">750<span class="price-currency">€</span></span></div>
+                        <hr class="pricing-divider">
+                        <ul class="pricing-features p-0">
+                            <li><i class="fas fa-check text-primary-blue"></i> <strong>100% Sans engagement</strong></li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Ajustements continus</li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Suivi mensuel de progression</li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Accès <strong>Cercle Privé</strong></li>
+                        </ul>
+                        <div class="mt-auto pt-4 text-center">
+                            <button class="btn w-100 btn-outline-blue mb-3" data-bs-toggle="modal" data-bs-target="#packDetailsModal2">Voir les détails</button>
+                            <button class="btn btn-dark w-100 rounded-pill fw-bold py-3" onclick="addToCart('Pack Fondation (3 mois)', 750)">Ajouter au panier</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 animate-on-scroll delay-3">
+                    <div class="pricing-card pricing-featured">
+                        <div class="badge-popular">LE PLUS POPULAIRE</div>
+                        <i class="fas fa-fire pricing-icon-top"></i>
+                        <h4 class="fw-bold mb-1 text-white">La Transformation</h4>
+                        <p class="mb-4" style="color:#aaa;">Changement durable (6 mois)</p>
+                        <div class="mb-2"><span class="price-wrapper">1000<span class="price-currency">€</span></span></div>
+                        <hr class="pricing-divider">
+                        <ul class="pricing-features p-0">
+                            <li><i class="fas fa-check text-primary-blue"></i> <span class="text-white fw-bold">100% Sans engagement</span></li>
+                            <li><i class="fas fa-check text-primary-blue"></i> <strong>Suivi Minceur Expert</strong></li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Bilan postural approfondi</li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Accompagnement VIP</li>
+                        </ul>
+                        <div class="mt-auto pt-4 text-center">
+                            <button class="btn w-100 btn-outline-light mb-3 rounded-pill fw-bold" style="border-width: 2px;" data-bs-toggle="modal" data-bs-target="#packDetailsModal3">Voir les détails</button>
+                            <button class="btn btn-cta w-100 py-3" data-bs-toggle="modal" data-bs-target="#calendlyModal">Réserver un Appel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 animate-on-scroll delay-4">
+                    <div class="pricing-card">
+                        <i class="fas fa-gem pricing-icon-top"></i>
+                        <h4 class="fw-bold mb-1">L'Élite 365</h4>
+                        <p class="text-muted mb-4">Le suivi ultime (1 an)</p>
+                        <div class="mb-2"><span class="price-wrapper">1200<span class="price-currency">€</span></span></div>
+                        <hr class="pricing-divider">
+                        <ul class="pricing-features p-0">
+                            <li><i class="fas fa-check text-primary-blue"></i> <strong>100% Sans engagement</strong></li>
+                            <li><i class="fas fa-video text-primary-blue"></i> <strong>1 Visio Hebdomadaire</strong></li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Bilans trimestriels complets</li>
+                            <li><i class="fas fa-check text-primary-blue"></i> Disponibilité absolue</li>
+                        </ul>
+                        <div class="mt-auto pt-4 text-center">
+                            <button class="btn w-100 btn-outline-blue mb-3" data-bs-toggle="modal" data-bs-target="#packDetailsModal4">Voir les détails</button>
+                            <button class="btn btn-dark w-100 rounded-pill fw-bold py-3" data-bs-toggle="modal" data-bs-target="#calendlyModal">Postuler au suivi</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="presentiel" class="section-padding animate-on-scroll">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0 pe-lg-5">
+                    <h4 class="text-primary-blue text-uppercase">Coaching à Domicile</h4>
+                    <h2 class="display-4 mb-4">Votre sport à moitié prix !</h2>
+                    <p class="lead text-dark fw-bold mb-4"><i class="fas fa-map-marker-alt text-primary-blue me-2"></i>Illkirch-Graffenstaden (+10km)</p>
+                    
+                    <div class="tax-benefit-box animate-on-scroll delay-1 text-start">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-hand-holding-usd text-primary-blue fs-1 me-3"></i>
+                            <h3 class="h4 mb-0 text-dark-black">Tarifs avec Crédit d'Impôt (-50%)</h3>
+                        </div>
+                        <p class="text-muted small mb-4">Prix final net payé par séance (après avance immédiate du crédit d'impôt).</p>
+                        
+                        <div class="pricing-tier-row">
+                            <span class="tier-label">1 séance / semaine</span>
+                            <span class="tier-price">48€ <span>/ séance</span></span>
+                        </div>
+                        <div class="pricing-tier-row">
+                            <span class="tier-label">2 séances / semaine</span>
+                            <span class="tier-price">42€ <span>/ séance</span></span>
+                        </div>
+                        <div class="pricing-tier-row">
+                            <span class="tier-label">3 séances / semaine</span>
+                            <span class="tier-price">36€ <span>/ séance</span></span>
+                        </div>
+                        <div class="pricing-tier-row border-0 mb-2">
+                            <span class="tier-label">Plus de 3 séances</span>
+                            <span class="text-muted fw-bold fst-italic">Sur devis</span>
+                        </div>
+
+                        <div class="alert-cancellation">
+                            <i class="fas fa-exclamation-triangle fs-4 me-3"></i>
+                            <p class="mb-0 small fw-bold text-dark-black">Rigueur exigée : Toute séance annulée moins de 24h à l'avance est due.</p>
+                        </div>
+
+                        <button class="btn btn-cta w-100 py-3 mt-4" data-bs-toggle="modal" data-bs-target="#calendlyModal">Planifier mon bilan à domicile</button>
+                    </div>
+                </div>
+                <div class="col-lg-6 position-relative animate-on-scroll delay-2">
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42345.549110461875!2d7.681146745145781!3d48.52778734914757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796ca34e7492c73%3A0x40a5fb99a3934f0!2s67400%20Illkirch-Graffenstaden!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr0" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="map-radius-overlay"></div>
+                        <div class="sap-badge-map"><i class="fas fa-hands-helping text-primary-blue me-2"></i> Agréé Service à la Personne</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="avis" class="section-padding bg-light-grey animate-on-scroll">
+        <div class="container">
+            <div class="text-center mb-huge">
+                <h4 class="text-primary-blue text-uppercase">Témoignages</h4>
+                <h2 class="display-4">Ils ont retrouvé le mouvement</h2>
+            </div>
+            
+            <div class="row g-4 mb-5 pb-5">
+                <div class="col-md-4"><div class="testimonial-card"><div class="d-flex align-items-center mb-4"><div class="client-avatar me-3"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Photo"></div><div><h5 class="mb-1">Sophie D.</h5><div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div><p class="fst-italic fw-medium">"Je n'avais pas fait de sport depuis 10 ans. Joris a su être très patient. Je ne me suis jamais sentie jugée !"</p></div></div>
+                <div class="col-md-4"><div class="testimonial-card"><div class="d-flex align-items-center mb-4"><div class="client-avatar me-3"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Photo"></div><div><h5 class="mb-1">Marc L.</h5><div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div><p class="fst-italic fw-medium">"Le suivi à distance est top. Les programmes sont hyper clairs pour suivre les séances. J'ai perdu 5kg en 2 mois !"</p></div></div>
+                <div class="col-md-4"><div class="testimonial-card"><div class="d-flex align-items-center mb-4"><div class="client-avatar me-3"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Photo"></div><div><h5 class="mb-1">Julie M.</h5><div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div></div><p class="fst-italic fw-medium">"Le coaching à domicile avec crédit d'impôt est imbattable ! Joris est très pro et on ne s'ennuie jamais."</p></div></div>
+            </div>
+            
+            <div class="row pt-4 border-top animate-on-scroll">
+                <div class="col-12 text-center mb-5">
+                    <h3 class="h2 fw-bold text-dark-black">Des résultats réels et durables</h3>
+                    <p class="text-muted">Moins de douleurs, plus d'énergie, et une silhouette affinée.</p>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="position-relative rounded-4 overflow-hidden shadow-sm bg-white p-2">
+                        <div class="d-flex">
+                            <div class="w-50 position-relative pe-1">
+                                <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=400&q=80" class="img-fluid rounded-3 transformation-img" style="filter: grayscale(100%);">
+                                <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark">AVANT</span>
+                            </div>
+                            <div class="w-50 position-relative ps-1">
+                                <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=400&q=80" class="img-fluid rounded-3 transformation-img">
+                                <span class="position-absolute bottom-0 start-0 m-2 badge" style="background-color: var(--sky-blue);">APRÈS (6 MOIS)</span>
+                            </div>
+                        </div>
+                        <p class="text-center mt-3 mb-2 fw-bold text-dark-black">Thomas, 38 ans. Fin des douleurs lombaires.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="position-relative rounded-4 overflow-hidden shadow-sm bg-white p-2">
+                        <div class="d-flex">
+                            <div class="w-50 position-relative pe-1">
+                                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=400&q=80" class="img-fluid rounded-3 transformation-img" style="filter: grayscale(100%);">
+                                <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark">AVANT</span>
+                            </div>
+                            <div class="w-50 position-relative ps-1">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=400&q=80" class="img-fluid rounded-3 transformation-img">
+                                <span class="position-absolute bottom-0 start-0 m-2 badge" style="background-color: var(--sky-blue);">APRÈS (4 MOIS)</span>
+                            </div>
+                        </div>
+                        <p class="text-center mt-3 mb-2 fw-bold text-dark-black">Sarah, 42 ans. -8kg et regain d'énergie.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section-padding animate-on-scroll">
+        <div class="container">
+            <div class="text-center mb-huge">
+                <h4 class="text-primary-blue text-uppercase">Questions Fréquentes</h4>
+                <h2 class="display-4">Vos interrogations</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="accordionFAQ">
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">Je n'ai pas fait de sport depuis des années, est-ce pour moi ?</button></h2><div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ"><div class="accordion-body">Absolument ! C'est même ma spécialité. J'accompagne principalement des actifs et employés de bureau sédentaires. Nous commençons très doucement, sans jugement.</div></div></div>
+                        
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix">Puis-je payer en plusieurs fois et y a-t-il un engagement ?</button></h2><div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ"><div class="accordion-body">Non, le règlement se fait en une seule fois au moment de la commande pour sceller votre détermination. En revanche, tous les packs sont <strong>100% sans engagement tacite</strong>. À la fin de votre période (1, 3, 6 ou 12 mois), vous êtes totalement libre de continuer ou d'arrêter.</div></div></div>
+                        
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Comment fonctionne le crédit d'impôt pour le domicile ?</button></h2><div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ"><div class="accordion-body">Le tarif de base dépend du nombre de séances (ex: 96€ pour 1 séance). Grâce à mon agrément Service à la Personne et l'avance immédiate, <strong>vous ne payez que 50% de cette somme</strong> (soit 48€/séance). La déduction se fait automatiquement, vous n'avez rien à avancer !</div></div></div>
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">J'ai des douleurs (dos, genoux), puis-je quand même me lancer ?</button></h2><div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ"><div class="accordion-body">Oui ! Le mouvement adapté est la clé pour soulager les maux liés à la sédentarité. Avant de commencer, nous faisons un bilan complet.</div></div></div>
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">Comment se passe le suivi nutritionnel ?</button></h2><div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ"><div class="accordion-body">Fini les régimes restrictifs ! Je vous donne des conseils de rééquilibrage simples à appliquer au quotidien pour soutenir votre perte de poids, sans frustration.</div></div></div>
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">Au bout de combien de temps verrai-je des résultats ?</button></h2><div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ"><div class="accordion-body">Vous sentirez des résultats sur votre énergie dès les premières semaines. Pour la perte de poids visible, comptez 4 à 8 semaines avec une bonne régularité.</div></div></div>
+                        <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven">Quel matériel dois-je avoir chez moi pour les suivis en ligne ?</button></h2><div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ"><div class="accordion-body">Presque rien pour commencer ! Une tenue confortable et un tapis de sol suffisent amplement. Par la suite, nous pourrons intégrer du petit matériel selon vos envies.</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding animate-on-scroll">
+        <div class="container">
+            <div class="text-center mb-huge">
+                <h4 class="text-primary-blue text-uppercase">Passer à l'action</h4>
+                <h2 class="display-4 text-dark-black">Discutons de vos objectifs</h2>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-5 d-flex flex-column gap-4">
+                    <div class="bento-card">
+                        <div class="contact-icon-circle bg-blue-light"><i class="fas fa-envelope"></i></div>
+                        <h4 class="fw-bold mb-3 text-dark-black">Contact Direct</h4>
+                        <p class="text-muted mb-4">Une question sur les programmes ou le crédit d'impôt ? Je vous réponds dans la journée.</p>
+                        <div class="d-flex flex-column gap-2 fw-bold text-dark-black">
+                            <span><i class="fas fa-map-marker-alt text-primary-blue me-2"></i> Illkirch-Graffenstaden (+10km)</span>
+                            <span><i class="fas fa-at text-primary-blue me-2"></i> contact@jorisperforme.fr</span>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-whatsapp">
+                        <div class="contact-icon-circle bg-green-light"><i class="fab fa-whatsapp"></i></div>
+                        <h4 class="fw-bold mb-2 text-white">Le Cercle Privé</h4>
+                        <p class="text-white-50 mb-4 small">Rejoignez la communauté WhatsApp de ceux qui refusent d'abandonner. Motivation & Conseils !</p>
+                        <button class="btn w-100 rounded-pill fw-bold py-3" style="background: white; color: var(--deep-black);" onclick="alert('Ouverture de WhatsApp...');">Intégrer le groupe</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="bento-card d-flex flex-column justify-content-center">
+                        <h3 class="fw-bold mb-4 text-dark-black">Envoyez-moi un message</h3>
+                        
+                        <form action="https://formspree.io/f/xgolpzzoEE" method="POST" class="row g-4">
+                            <div class="col-md-6">
+                                <label class="simple-form-label">Votre Prénom</label>
+                                <input type="text" name="prenom" class="simple-input" placeholder="Ex: Joris" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="simple-form-label">Votre Email</label>
+                                <input type="email" name="email" class="simple-input" placeholder="Ex: email@domaine.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="simple-form-label">Sujet de votre message</label>
+                                <select name="sujet" class="simple-input" style="cursor: pointer;" required>
+                                    <option value="" selected disabled>Sélectionnez une option...</option>
+                                    <option value="Coaching à domicile">Coaching à domicile (Illkirch)</option>
+                                    <option value="Coaching en ligne">Coaching à distance</option>
+                                    <option value="Crédit impot">Question sur le crédit d'impôt</option>
+                                    <option value="Autre">Autre demande</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="simple-form-label">Comment puis-je vous aider ?</label>
+                                <textarea name="message" class="simple-input" rows="4" placeholder="Décrivez brièvement votre objectif..." required></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-cta w-100 py-3 rounded-pill btn-submit-animated">
+                                    Envoyer le message <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white pb-0">
+        <div class="container pb-5">
+            <div class="row text-center text-md-start">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h4 class="mb-3 fst-italic text-dark-black">JORIS PERFORME</h4> 
+                    <p class="mb-2 text-muted fw-bold">Le sport pour les actifs, simplement.</p>
+                    <p class="small mb-3 text-muted">Coach Sportif Diplômé - Illkirch-Graffenstaden et Alentours.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                     <h5 class="mb-3 text-dark-black">Navigation Rapide</h5>
+                    <ul class="list-unstyled lh-lg">
+                        <li><a href="#coaching-en-ligne">Les Coachings en Ligne</a></li>
+                        <li><a href="#presentiel">Domicile & Crédit d'Impôts</a></li>
+                        <li><a href="#contact">Me contacter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <section id="mentions-legales">
+            <div class="container text-center text-md-start">
+                <div class="row align-items-center">
+                    <div class="col-md-8 mb-3 mb-md-0">
+                        <p class="mb-1"><strong>Éditeur du site :</strong> Monsieur Joris Wagner, Entrepreneur Individuel.</p>
+                        <p class="mb-1"><strong>Numéro SIREN :</strong> 979 130 390</p>
+                        <p class="mb-0 mt-3 small opacity-50">© 2026 Joris Wagner. Tous droits réservés.</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#legalModal" class="btn btn-outline-light btn-sm rounded-pill px-4" style="border-width: 2px; color: var(--primary-color); border-color: var(--primary-color);">Lire les C.G.V.</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0 pb-3 px-3">
+                    <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg">
+                        <iframe src="https://www.youtube.com/embed/ID_VIDEO_YOUTUBE?rel=0" title="Présentation Joris Wagner" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="packDetailsModal1" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><div class="modal-header bg-white text-dark-black"><h5 class="modal-title fw-bold">Détails de L'Impulsion</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body p-5"><ul class="list-unstyled pack-details-list"><li class="mb-4 d-flex"><i class="fas fa-laptop-code text-promo fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Offre Unique</h6><p class="text-muted">Valable une seule fois pour tester la méthode.</p></div></li><li class="mb-4 d-flex"><i class="fas fa-dumbbell text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Séances sur-mesure</h6><p class="text-muted">Adaptées à votre emploi du temps.</p></div></li></ul><button type="button" class="btn btn-cta w-100 py-3 mt-3" data-bs-dismiss="modal" onclick="addToCart('Pack Impulsion (1 mois)', 150)">Ajouter au panier (150€)</button></div></div></div></div>
+    <div class="modal fade" id="packDetailsModal2" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><div class="modal-header bg-white text-dark-black"><h5 class="modal-title fw-bold">Détails de La Fondation</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body p-5"><ul class="list-unstyled pack-details-list"><li class="mb-4 d-flex"><i class="fas fa-check-circle text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Tout le pack Impulsion</h6><p class="text-muted">Suivi + Programmes.</p></div></li><li class="mb-4 d-flex"><i class="fas fa-chart-line text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Suivi et Ajustements</h6><p class="text-muted">On adapte le programme chaque mois selon vos progrès.</p></div></li></ul><button type="button" class="btn btn-cta w-100 py-3 mt-3" data-bs-dismiss="modal" onclick="addToCart('Pack Fondation (3 mois)', 750)">Ajouter au panier (750€)</button></div></div></div></div>
+    <div class="modal fade" id="packDetailsModal3" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content border-0" style="box-shadow: 0 0 50px rgba(0, 180, 216, 0.4);"><div class="modal-header bg-blue-gradient text-white"><h5 class="modal-title fw-bold">Détails de La Transformation</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-5"><ul class="list-unstyled pack-details-list"><li class="mb-4 d-flex"><i class="fas fa-check-circle text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Contenu du Pack Fondation</h6><p class="text-muted">Tout est inclus.</p></div></li><li class="mb-4 d-flex"><i class="fas fa-chart-line text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Suivi Minceur Expert</h6><p class="text-muted">Suivi précis des mensurations pour visualiser vos progrès.</p></div></li></ul><button type="button" class="btn btn-dark w-100 py-3 mt-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#calendlyModal">Réserver mon appel découverte</button></div></div></div></div>
+    <div class="modal fade" id="packDetailsModal4" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><div class="modal-header bg-white text-dark-black"><h5 class="modal-title fw-bold">Détails de L'Élite 365</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body p-5"><ul class="list-unstyled pack-details-list"><li class="mb-4 d-flex"><i class="fas fa-check-circle text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">Contenu de La Transformation</h6><p class="text-muted">Suivi expert sur 1 an.</p></div></li><li class="mb-4 d-flex"><i class="fas fa-video text-primary-blue fs-3 me-3 mt-1"></i><div><h6 class="text-dark-black fw-bold">1 Visio Hebdomadaire en direct</h6><p class="text-muted">On fait le point chaque semaine pour garder le cap.</p></div></li></ul><button type="button" class="btn btn-cta w-100 py-3 mt-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#calendlyModal">Postuler au suivi VIP</button></div></div></div></div>
+    
+    <div class="modal fade" id="calendlyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark-black text-white border-0">
+                    <h5 class="modal-title"><i class="fas fa-calendar-check me-2 text-primary-blue"></i> Réserver votre Bilan Gratuit</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/polmvzatnk67/30min"
+hide_event_type_details=1&hide_gdpr_banner=1&primary_color=00b4d8" style="min-width:320px;height:630px;"></div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="legalModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><div class="modal-header bg-dark-black text-white"><h5 class="modal-title">C.G.V.</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-5"><p>Conditions Générales de Vente de Joris Wagner.</p></div></div></div></div>
+    
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark-black text-white">
+                    <h5 class="modal-title"><i class="fas fa-shopping-cart text-primary-blue me-2"></i> Votre Panier</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <ul class="list-unstyled cart-item-list border-bottom pb-3 mb-3" id="cart-items" style="min-height: 80px;">
+                        <li class="text-muted text-center py-3 w-100 d-block">Votre panier est vide.</li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="h5 mb-0 fw-bold">Total :</span>
+                        <span class="cart-total text-primary-blue fw-bold h3 mb-0" id="cart-total-price">0€</span>
+                    </div>
+                    
+                    <div id="captcha-container" class="mb-4 p-3 bg-light-grey rounded-4 border d-none">
+                        <label class="form-label fw-bold small text-muted mb-2"><i class="fas fa-shield-alt text-primary-blue me-1"></i> Sécurité anti-robot</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <span id="captcha-question" class="badge bg-white text-dark border fs-5 py-2 px-3 shadow-sm">? + ? =</span>
+                            <input type="number" id="captcha-answer" class="form-control modern-input w-50 fw-bold text-center" placeholder="Réponse">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-cta w-100 py-3" disabled id="btn-checkout">Valider & Payer <i class="fas fa-lock ms-2"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-launcher" id="chatLauncher"><i class="fas fa-comments fa-lg"></i></div>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="d-flex align-items-center">
+                <div class="position-relative me-3">
+                    <div class="bg-white text-primary-blue rounded-circle d-flex align-items-center justify-content-center fw-bold fs-5" style="width: 45px; height: 45px;">N</div>
+                    <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle" style="width: 12px; height: 12px; margin-bottom: 2px; margin-right: 2px;"></span>
+                </div>
+                <div><h5 class="mb-0 fw-bold" style="line-height: 1;">Nova</h5><small class="text-white-50" style="font-size: 0.8rem;">Coach Virtuel</small></div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" id="chatClose"></button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot-message">Bonjour ! Je suis Nova. 👋</div>
+            <div class="chat-message bot-message delay-1">Posez-moi votre question au clavier, ou choisissez une option !</div>
+        </div>
+        <div class="chat-body py-0 pb-2" style="background: transparent; min-height: 0;">
+             <div class="typing-indicator" id="typingIndicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+        </div>
+        <div class="chat-options" id="chatOptions"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Écrivez votre message..." autocomplete="off">
+            <button id="chatSend" class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* ==============================================
+               1. CONFIGURATION STRIPE
+               ============================================== */
+            const stripe = Stripe('pk_test_VOTRE_CLE_PUBLIQUE_ICI'); 
+            const stripePriceIds = {
+                'Pack Impulsion (1 mois)': 'price_VOTRE_ID_PACK_1_MOIS',
+                'Pack Fondation (3 mois)': 'price_VOTRE_ID_PACK_3_MOIS',
+                'Pack Transformation (6 mois)': 'price_VOTRE_ID_PACK_6_MOIS',
+                'Pack L\'Élite 365 (1 an)': 'price_VOTRE_ID_PACK_1_AN'
+            };
+
+            const btnCheckout = document.getElementById('btn-checkout');
+            if (btnCheckout) {
+                btnCheckout.addEventListener('click', () => {
+                    btnCheckout.innerHTML = 'Redirection... <i class="fas fa-spinner fa-spin ms-2"></i>';
+                    btnCheckout.disabled = true;
+
+                    const lineItems = window.cart.map(item => {
+                        const priceId = stripePriceIds[item.name];
+                        if(!priceId || priceId.includes('VOTRE_ID')) {
+                            alert(`Erreur: L'ID Stripe pour "${item.name}" n'est pas configuré.`);
+                            btnCheckout.innerHTML = 'Valider & Payer <i class="fas fa-lock ms-2"></i>';
+                            btnCheckout.disabled = false;
+                            throw new Error("Stripe Price ID manquant");
+                        }
+                        return { price: priceId, quantity: 1 };
+                    });
+
+                    stripe.redirectToCheckout({
+                        lineItems: lineItems, mode: 'payment',
+                        successUrl: window.location.origin + window.location.pathname + '?payment=success',
+                        cancelUrl: window.location.origin + window.location.pathname + '?payment=cancel',
+                    }).then(function (result) {
+                        if (result.error) {
+                            alert(result.error.message);
+                            btnCheckout.innerHTML = 'Valider & Payer <i class="fas fa-lock ms-2"></i>';
+                            btnCheckout.disabled = false;
+                        }
+                    });
+                });
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('payment') === 'success') alert("🎉 Paiement réussi ! Joris vous contactera très vite.");
+
+            /* ==============================================
+               2. DOUBLE SÉCURITÉ CAPTCHA DANS LE PANIER
+               ============================================== */
+            let captchaNum1 = 0; let captchaNum2 = 0; let isCaptchaValid = false;
+            
+            function generateCaptcha() {
+                captchaNum1 = Math.floor(Math.random() * 10) + 1;
+                captchaNum2 = Math.floor(Math.random() * 10) + 1;
+                document.getElementById('captcha-question').innerText = `${captchaNum1} + ${captchaNum2} =`;
+                document.getElementById('captcha-answer').value = '';
+                isCaptchaValid = false; updateCheckoutButton();
+            }
+
+            document.getElementById('captcha-answer').addEventListener('input', function(e) {
+                isCaptchaValid = (parseInt(e.target.value) === (captchaNum1 + captchaNum2));
+                updateCheckoutButton();
+            });
+
+            function updateCheckoutButton() {
+                const captchaContainer = document.getElementById('captcha-container');
+                if (window.cart.length === 0) {
+                    btnCheckout.disabled = true; captchaContainer.classList.add('d-none');
+                } else {
+                    captchaContainer.classList.remove('d-none');
+                    btnCheckout.disabled = !isCaptchaValid;
+                }
+            }
+
+            /* ==============================================
+               3. ANIMATION VIDEO MODAL
+               ============================================== */
+            const videoModal = document.getElementById('videoModal');
+            if(videoModal) {
+                videoModal.addEventListener('hidden.bs.modal', function () {
+                    const iframe = this.querySelector('iframe');
+                    if(iframe) { let src = iframe.src; iframe.src = src; }
+                });
+            }
+
+            // --- 4. BULLES ANIMÉES AU SURVOL ---
+            const bubbleWrappers = document.querySelectorAll('.progress-bubble-wrapper');
+            bubbleWrappers.forEach(wrapper => {
+                const bubble = wrapper.querySelector('.progress-bubble');
+                const circle = bubble.querySelector('.progress-circle');
+                const counter = bubble.querySelector('.counter');
+                const val = parseInt(wrapper.getAttribute('data-value'));
+                const r = 54; const circum = 2 * Math.PI * r; 
+                circle.style.strokeDasharray = circum; circle.style.strokeDashoffset = circum; 
+                let counterInterval;
+
+                wrapper.addEventListener('mouseenter', () => {
+                    circle.style.strokeDashoffset = circum - (val / 100) * circum;
+                    clearInterval(counterInterval);
+                    let current = parseInt(counter.innerText) || 0;
+                    const step = Math.ceil(val / 20); 
+                    counterInterval = setInterval(() => {
+                        current += step;
+                        if(current >= val) { counter.innerText = val; clearInterval(counterInterval); } 
+                        else { counter.innerText = current; }
+                    }, 30);
+                });
+
+                wrapper.addEventListener('mouseleave', () => {
+                    circle.style.strokeDashoffset = circum;
+                    clearInterval(counterInterval);
+                    let current = parseInt(counter.innerText) || val;
+                    const step = Math.ceil(current / 20);
+                    counterInterval = setInterval(() => {
+                        current -= step;
+                        if(current <= 0) { counter.innerText = 0; clearInterval(counterInterval); } 
+                        else { counter.innerText = current; }
+                    }, 30);
+                });
+            });
+
+            // --- 5. CHATBOT IA HYBRIDE (NOVA) ---
+            const chatLauncher = document.getElementById('chatLauncher'); 
+            const chatWindow = document.getElementById('chatWindow'); 
+            const chatClose = document.getElementById('chatClose'); 
+            const chatBody = document.getElementById('chatBody'); 
+            const chatOptions = document.getElementById('chatOptions');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            if(chatLauncher && chatWindow) {
+                chatLauncher.addEventListener('click', () => { chatWindow.classList.add('active'); scrollToBottom(); });
+                chatClose.addEventListener('click', () => chatWindow.classList.remove('active'));
+                
+                const flow = {
+                    'start': { msg: "Comment puis-je vous aider ?", opts: [{l:"Offres & Tarifs", a:'o2'}, {l:"Lieux de coaching ?", a:'o1'}, {l:"Contact humain", a:'o3'}] },
+                    'o1': { msg: "Joris propose un suivi 100% en ligne, ou du coaching à domicile si vous êtes sur Illkirch et alentours.", opts: [{l:"Infos Domicile", a:'o4'}, {l:"Infos En ligne", a:'o5'}] },
+                    'o4': { msg: "Le tarif à domicile est dégressif ! De 48€ à 36€ par séance selon la fréquence (après crédit d'impôt).", opts: [{l:"Prendre RDV", a:'scroll_domicile'}, {l:"Autre question", a:'start'}] },
+                    'o5': { msg: "Nos suivis en ligne vont de 1 à 12 mois sans engagement. Avec une offre découverte exceptionnelle à 150€ !", opts: [{l:"Voir les tarifs", a:'scroll_offres'}] },
+                    'o2': { msg: "En ligne : de 150€ à 1200€. Domicile : de 36€ à 48€ la séance après déduction d'impôts.", opts: [{l:"Voir les offres", a:'scroll_offres'}] },
+                    'o3': { msg: "Vous pouvez réserver un appel gratuit ou utiliser le formulaire !", opts: [{l:"Prendre RDV (Appel)", a:'scroll_offres'}, {l:"Formulaire", a:'scroll_contact'}] }
+                };
+
+                function renderOpts(arr) {
+                    chatOptions.innerHTML = ''; 
+                    arr.forEach(o => {
+                        let b = document.createElement('button'); b.className = 'chat-option-btn'; b.innerText = o.l;
+                        b.onclick = () => handleUserAction(o.l, o.a, true); chatOptions.appendChild(b);
+                    });
+                }
+
+                function scrollToBottom() { setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 50); }
+                function showTyping() { typingIndicator.classList.add('active'); scrollToBottom(); }
+                function hideTyping() { typingIndicator.classList.remove('active'); }
+
+                function handleUserAction(text, actionKey, isButton = false) {
+                    chatBody.innerHTML += `<div class="chat-message user-message">${text}</div>`;
+                    if(isButton) chatOptions.innerHTML = ''; 
+                    scrollToBottom();
+                    
+                    if (actionKey === 'scroll_offres') { executeActionAfterDelay(() => document.getElementById('coaching-en-ligne').scrollIntoView({behavior:'smooth'})); return; }
+                    if (actionKey === 'scroll_domicile') { executeActionAfterDelay(() => document.getElementById('presentiel').scrollIntoView({behavior:'smooth'})); return; }
+                    if (actionKey === 'scroll_contact') { executeActionAfterDelay(() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})); return; }
+
+                    showTyping();
+                    setTimeout(() => {
+                        hideTyping();
+                        let step = flow[actionKey];
+                        if (step) { chatBody.innerHTML += `<div class="chat-message bot-message">${step.msg}</div>`; renderOpts(step.opts || [{l:"Autre demande", a:'start'}]); }
+                        scrollToBottom();
+                    }, 800 + Math.random() * 700); 
+                }
+
+                function executeActionAfterDelay(actionFn) {
+                    showTyping();
+                    setTimeout(() => {
+                        hideTyping();
+                        chatBody.innerHTML += `<div class="chat-message bot-message">Je vous y emmène ! 🚀</div>`;
+                        renderOpts([{l:"Retour au menu", a:'start'}]);
+                        chatWindow.classList.remove('active');
+                        actionFn();
+                    }, 1000);
+                }
+
+                function processFreeText(text) {
+                    const lowerText = text.toLowerCase();
+                    chatBody.innerHTML += `<div class="chat-message user-message">${text}</div>`;
+                    chatInput.value = ''; chatOptions.innerHTML = '';
+                    scrollToBottom(); showTyping();
+
+                    setTimeout(() => {
+                        hideTyping();
+                        let responseMsg = ""; let responseOpts = [];
+
+                        if(lowerText.includes('prix') || lowerText.includes('tarif') || lowerText.includes('combien')) {
+                            responseMsg = "En ligne, l'offre test est à 150€. À domicile (Illkirch), les tarifs vont de 36€ à 48€ la séance (après crédit d'impôts).";
+                            responseOpts = [{l:"Voir les packs en ligne", a:'scroll_offres'}, {l:"Voir l'offre domicile", a:'scroll_domicile'}];
+                        } 
+                        else if(lowerText.includes('domicile') || lowerText.includes('strasbourg') || lowerText.includes('illkirch')) {
+                            responseMsg = "Oui, Joris se déplace à Illkirch-Graffenstaden et alentours (+10km) ! Et vous bénéficiez de 50% de crédit d'impôt immédiat.";
+                            responseOpts = [{l:"Plus d'infos", a:'scroll_domicile'}, {l:"Retour", a:'start'}];
+                        }
+                        else if(lowerText.includes('engagement') || lowerText.includes('annuler')) {
+                            responseMsg = "Le paiement se fait en une fois, mais vous n'avez aucun engagement tacite à la fin du pack ! Attention, pour le domicile, une annulation de moins de 24h est facturée.";
+                            responseOpts = [{l:"Ok, voir les prix", a:'scroll_offres'}];
+                        }
+                        else if(lowerText.includes('douleur') || lowerText.includes('mal') || lowerText.includes('dos')) {
+                            responseMsg = "C'est justement la spécialité de Joris. Sa méthode déverrouille le corps et soulage les douleurs liées à la sédentarité.";
+                            responseOpts = [{l:"Voir les Packs", a:'scroll_offres'}, {l:"Parler à Joris", a:'scroll_contact'}];
+                        }
+                        else if(lowerText.includes('rdv') || lowerText.includes('rendez') || lowerText.includes('appel')) {
+                            responseMsg = "Le meilleur moyen de faire le point est de réserver un Bilan 100% gratuit avec Joris.";
+                            responseOpts = [{l:"Réserver mon appel", a:'scroll_offres'}];
+                        }
+                        else {
+                            responseMsg = "Je suis en apprentissage 🤖 Que préférez-vous faire ?";
+                            responseOpts = [{l:"Voir les offres", a:'scroll_offres'}, {l:"Contacter le coach", a:'scroll_contact'}];
+                        }
+
+                        chatBody.innerHTML += `<div class="chat-message bot-message">${responseMsg}</div>`;
+                        renderOpts(responseOpts); scrollToBottom();
+                    }, 1200); 
+                }
+
+                chatSend.addEventListener('click', () => { if(chatInput.value.trim() !== '') processFreeText(chatInput.value.trim()); });
+                chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter' && chatInput.value.trim() !== '') processFreeText(chatInput.value.trim()); });
+                renderOpts(flow['start'].opts);
+            }
+
+            // --- 6. ANIMATION SCROLL ---
+            const obs = new IntersectionObserver((entries, o) => { entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('animate-visible'); o.unobserve(e.target); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => obs.observe(el));
+
+            // --- 7. PANIER & CAPTCHA REFRESH ---
+            window.cart = []; window.total = 0;
+            const cModalEl = document.getElementById('cartModal'); let cModalBS;
+            if(cModalEl) {
+                cModalBS = new bootstrap.Modal(cModalEl);
+                cModalEl.addEventListener('show.bs.modal', generateCaptcha);
+            }
+
+            window.addToCart = function(name, price) {
+                cart.push({name, price}); total += price;
+                document.getElementById('cart-count-desktop').innerText = cart.length; document.getElementById('cart-count-mobile').innerText = cart.length;
+                document.getElementById('cart-total-price').innerText = total + "€";
+                let list = ''; cart.forEach((item, i) => list += `<li class="w-100 d-flex justify-content-between align-items-center mb-2"><span>${item.name}</span><span class="fw-bold">${item.price}€ <i class="fas fa-trash-alt text-danger ms-3" onclick="removeItem(${i})" style="cursor:pointer"></i></span></li>`);
+                document.getElementById('cart-items').innerHTML = list; 
+                updateCheckoutButton();
+                if(cModalBS) cModalBS.show();
+            };
+
+            window.removeItem = function(i) {
+                total -= cart[i].price; cart.splice(i, 1);
+                document.getElementById('cart-count-desktop').innerText = cart.length; document.getElementById('cart-count-mobile').innerText = cart.length;
+                document.getElementById('cart-total-price').innerText = total + "€";
+                if(cart.length === 0){ 
+                    document.getElementById('cart-items').innerHTML='<li class="text-center text-muted w-100 py-3 d-block">Votre panier est vide.</li>'; 
+                } else {
+                    let list = ''; cart.forEach((item, idx) => list += `<li class="w-100 d-flex justify-content-between align-items-center mb-2"><span>${item.name}</span><span class="fw-bold">${item.price}€ <i class="fas fa-trash-alt text-danger ms-3" onclick="removeItem(${idx})" style="cursor:pointer"></i></span></li>`);
+                    document.getElementById('cart-items').innerHTML = list;
+                }
+                updateCheckoutButton();
+            };
+
+            // --- 8. NAVBAR SCROLL ---
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('.navbar'); const icons = document.querySelectorAll('.cart-nav-item i');
+                if (window.scrollY > 50) { nav.classList.add('scrolled', 'navbar-light'); nav.classList.remove('navbar-dark'); icons.forEach(i => i.style.color = 'var(--deep-black)'); }
+                else { nav.classList.remove('scrolled', 'navbar-light'); nav.classList.add('navbar-dark'); icons.forEach(i => i.style.color = 'white'); }
+            });
+
+            // --- 9. SMOOTH SCROLL ---
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if(href.length > 1 && !href.startsWith("#collapse") && !href.startsWith("#pack") && !href.startsWith("#cart") && !href.startsWith("#welcome") && !href.startsWith("#calendly") && !href.startsWith("#legal") && !href.startsWith("#video")) {
+                        e.preventDefault(); const target = document.querySelector(href);
+                        if(target) {
+                            window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+                            const col = document.querySelector('.navbar-collapse');
+                            if(col && col.classList.contains('show')) document.querySelector('.navbar-toggler').click();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
